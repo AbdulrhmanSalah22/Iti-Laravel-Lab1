@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,20 +12,18 @@ class ArticleController extends Controller
 {
     public function create()
     {
-        return view('Article.create');
+        $cat = Category::select('name')->get();
+//        return $cat  ;
+        return view('Article.create',['cats' => $cat] ) ;
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:articles',
-            'details' => 'required|max:50',
-            'cat_id' => 'required'
-        ]);
+        $cat_id = Category::where('name', $request -> cat_name)->get();
         $article = new Article;
         $article->name = $request->name;
         $article->details = $request->details;
-        $article->cat_id = $request->cat_id;
+        $article->cat_id = $cat_id[0] -> id;
 
         $article->save();
 
@@ -47,13 +47,21 @@ class ArticleController extends Controller
     }
 
     public function edit($id){
-        $article =  Article::where('id','=',$id)->get();
-              return view('Article.edit',['article'=> $article]);
+//        $article =  Article::where('id','=',$id)->get();
+        $cats = Category::all();
+        $article =  Article::find($id);
+//        $article -> category ;
+//        return $article ;
+        return view('Article.edit',['article'=> $article , 'cats' => $cats]);
     }
 
     public function update(Request $request , $id){
-    
-        DB::table('articles')->where('id',$id)->update(['name' => $request-> name , 'details' => $request-> details,'cat_id' => $request->cat_id]);
+        $cat = Category::where('name',$request -> cat_name)->get();
+        DB::table('articles')->where('id',$id)->update(['name' => $request-> name , 'details' => $request-> details,'cat_id' => $cat[0] -> id]);
+//        $article =  Article::find($id);
+//        $article -> category;
+//        return $article ;
+
         return redirect()->route("ShowArticle");
     }
 }

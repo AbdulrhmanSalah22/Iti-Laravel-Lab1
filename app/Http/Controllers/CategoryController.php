@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,10 +12,8 @@ class CategoryController extends Controller
     public function create(){
         return view('Category.create');
     }
-    public function store(Request $request ){
-        $request->validate([
-            'name' => 'required|unique:categories'
-        ]);
+    public function store(CategoryRequest $request ){
+
         DB::table('categories')->insert([
            'name' => $request -> name
         ]);
@@ -42,6 +41,14 @@ class CategoryController extends Controller
         // ]);
         DB::table('categories')->where('id',$id)->update(['name' => $request->name]);
         return redirect()->route("ShowCategories");
+    }
+    public function showArticle($id){
+
+//      $article =  DB::table('articles')->where('cat_id',$id)->get();
+        $cat = Category::find($id);
+        $article = $cat-> article ;
+//        return $article ;
+      return view('Category.showArticle',['article'=>$article]);
     }
 
 }

@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Create Category</title>
+    <title>Create Article</title>
 </head>
 
 <body>
-<h1 class="text-center my-5">Add New Category</h1>
+<h1 class="text-center my-5">Add New Article</h1>
 <div class="container">
 
     <form method="POST" action="{{ route('StoreArticle') }}">
@@ -27,8 +27,13 @@
             @enderror
             <br>
             <br>
-            <input type="number" class="form-control" name="cat_id" placeholder="Enter Category Id">
-            @error('cat_id')
+                <select class="form-control" name="cat_name" >
+                <option value="" disabled selected>Please select Category</option>
+            @foreach($cats as $cat)
+                <option  value="{{$cat->name}}">{{ $cat->name }}</option>
+            @endforeach
+            </select>
+            @error('cat_name')
             <small class="form-text text-danger">{{$message}}</small>
             @enderror
         </div>

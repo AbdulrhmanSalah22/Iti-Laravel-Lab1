@@ -17,7 +17,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th colspan="2" scope="col">Actions</th>
+            <th colspan="3" scope="col">Actions</th>
 
         </tr>
         </thead>
@@ -30,10 +30,11 @@
                     <form method="post" action="{{ route('deleteCategory' , $cat -> id) }}" >
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-info"> Delete </button>
+                        <button type="submit" class="btn btn-danger"> Delete </button>
                     </form>
                 </td>
-                <td>  <a class="btn btn-info" href="/cat/edit/{{ $cat -> id }}"> Update </a></td>
+                <td>  <a class="btn btn-success" href="/cat/edit/{{ $cat -> id }}"> Update </a></td>
+                <td>  <a class="btn btn-info" href="/cat/art/{{ $cat -> id }}"> Show Articles </a></td>
             </tr>
         @endforeach
         </tbody>

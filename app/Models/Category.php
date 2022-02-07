@@ -9,4 +9,9 @@ class Category extends Model
 {
     use HasFactory;
     public  $timestamps = false ;
+
+    public function article()
+    {
+        return $this->hasMany(Article::class , 'cat_id' ,'id');
+    }
 }
