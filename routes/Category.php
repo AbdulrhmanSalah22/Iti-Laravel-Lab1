@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => 'auth' , 'prefix' => 'cat'], function (){
-    Route::get('/add',[CategoryController::class , 'create'])->middleware(['isAdmin']);
+    Route::get('/add',[CategoryController::class , 'create'])->middleware(['isAdmin','verifyAge']);
     Route::post('/store',[CategoryController::class , 'store'])->name('StoreCategory');
-    Route::get('/show' , [CategoryController::class,'show'])->name('ShowCategories')->middleware(['verifyAge']);
+    Route::get('/show' , [CategoryController::class,'show'])->name('ShowCategories')->middleware(['isAdmin']);
     Route::delete('/delete/{id}',[CategoryController::class , 'delete'])->name('deleteCategory');
     Route::get('/edit/{id}',[CategoryController::class , 'edit']);
     Route::post('/update/{id}',[CategoryController::class , 'update'])->name('UpdateCategory');

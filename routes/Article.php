@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth' , 'prefix' => 'art'], function () {
-    Route::get('/add', [ArticleController::class, 'create'])->middleware(['isAdmin']);
+    Route::get('/add', [ArticleController::class, 'create'])->middleware(['isAdmin','verifyAge']);
     Route::post('/store', [ArticleController::class, 'store'])->name('StoreArticle');
-    Route::get('/show', [ArticleController::class, 'show'])->name('ShowArticle')->middleware(['isAdmin','verifyAge']);
+    Route::get('/show', [ArticleController::class, 'show'])->name('ShowArticle')->middleware(['isAdmin']);
     Route::delete('/delete/{id}', [ArticleController::class, 'delete'])->name('deleteArticle');
     Route::get('/edit/{id}', [ArticleController::class, 'edit']);
     Route::post('/update/{id}', [ArticleController::class, 'update'])->name('UpdateArticle');
