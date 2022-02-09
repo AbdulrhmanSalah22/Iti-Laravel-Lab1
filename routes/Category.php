@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'auth' , 'prefix' => 'cat'], function (){
+    Route::get('/add',[CategoryController::class , 'create'])->middleware(['isAdmin']);
+    Route::post('/store',[CategoryController::class , 'store'])->name('StoreCategory');
+    Route::get('/show' , [CategoryController::class,'show'])->name('ShowCategories')->middleware(['verifyAge']);
+    Route::delete('/delete/{id}',[CategoryController::class , 'delete'])->name('deleteCategory');
+    Route::get('/edit/{id}',[CategoryController::class , 'edit']);
+    Route::post('/update/{id}',[CategoryController::class , 'update'])->name('UpdateCategory');
+    Route::get('/art/{id}',[CategoryController::class , 'showArticle'])->name('ShowArticle');
+});
 
-Route::get('cat/add',[CategoryController::class , 'create']);
-Route::post('cat/store',[CategoryController::class , 'store'])->name('StoreCategory');
-Route::get('cat/show' , [CategoryController::class,'show'])->name('ShowCategories');
-Route::delete('cat/delete/{id}',[CategoryController::class , 'delete'])->name('deleteCategory');
-Route::get('cat/edit/{id}',[CategoryController::class , 'edit']);
-Route::post('cat/update/{id}',[CategoryController::class , 'update'])->name('UpdateCategory');
-Route::get('cat/art/{id}',[CategoryController::class , 'showArticle'])->name('ShowArticle');

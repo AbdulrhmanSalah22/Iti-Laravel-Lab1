@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('art/add',[ArticleController::class , 'create']);
-Route::post('art/store',[ArticleController::class , 'store'])->name('StoreArticle');
-Route::get('art/show' , [ArticleController::class ,  'show'])->name('ShowArticle');
-Route::delete('art/delete/{id}',[ArticleController::class , 'delete'])->name('deleteArticle');
-Route::get('art/edit/{id}',[ArticleController::class , 'edit']);
-Route::post('art/update/{id}',[ArticleController::class , 'update'])->name('UpdateArticle');
+Route::group(['middleware' => 'auth' , 'prefix' => 'art'], function () {
+    Route::get('/add', [ArticleController::class, 'create'])->middleware(['isAdmin']);
+    Route::post('/store', [ArticleController::class, 'store'])->name('StoreArticle');
+    Route::get('/show', [ArticleController::class, 'show'])->name('ShowArticle')->middleware(['isAdmin','verifyAge']);
+    Route::delete('/delete/{id}', [ArticleController::class, 'delete'])->name('deleteArticle');
+    Route::get('/edit/{id}', [ArticleController::class, 'edit']);
+    Route::post('/update/{id}', [ArticleController::class, 'update'])->name('UpdateArticle');
+});
