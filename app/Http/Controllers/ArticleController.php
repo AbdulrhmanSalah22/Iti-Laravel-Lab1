@@ -32,7 +32,7 @@ class ArticleController extends Controller
     public function show()
     {
 
-        $article = Article::all();
+        $article = Article::paginate(5);
 
         //   $article =  DB::table('articles')->get();
         //       return $article;

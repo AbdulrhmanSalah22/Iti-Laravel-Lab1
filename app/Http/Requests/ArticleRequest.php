@@ -26,7 +26,7 @@ class ArticleRequest extends FormRequest
         return [
             'name' => 'required|unique:articles',
             'details' => 'required|min:10|max:20',
-            'cat_name' => 'required'
+            // 'cat_name' => 'required'
         ];
     }
 }
